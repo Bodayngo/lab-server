@@ -1,0 +1,131 @@
+# Intermediate OpenSSL configuration 
+# /root/ca/intermediate/openssl.cnf
+
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir = /root/ca/intermediate
+certs = $dir/certs
+crl_dir = $dir/crl
+database = $dir/index.txt
+unique_subject = no
+new_certs_dir = $dir/newcerts
+certificate = $dir/certs/ca-intermediate.lab.local.cert.pem
+serial = $dir/serial
+RANDFILE = $dir/private/.rand
+crlnumber = $dir/crlnumber
+crl = $dir/crl/crl.pem
+private_key = $dir/private/ca-intermediate.lab.local.key.pem
+name_opt = ca_default
+cert_opt = ca_default
+#copy_extensions = copy
+#crl_extensions = crl_ext
+default_days = 365
+default_crl_days = 30
+default_md = sha256
+preserve = no
+policy = policy_match
+
+[ policy_match ]
+countryName = match
+stateOrProvinceName = match
+localityName = optional
+organizationName = match
+organizationalUnitName = optional
+commonName = supplied
+emailAddress = optional
+
+[ policy_anything ]
+countryName = optional
+stateOrProvinceName     = optional
+localityName = optional
+organizationName = optional
+organizationalUnitName = optional
+commonName = supplied
+emailAddress = optional
+
+[ req ]
+default_bits = 2048
+#default_keyfile = privkey.pem
+distinguished_name = req_distinguished_name
+#attributes = req_attributes
+x509_extensions = v3_ca
+#input_password = secret
+#output_password = secret
+string_mask = utf8only
+#req_extensions = v3_req
+
+[ req_distinguished_name ]
+countryName = Country Name (2 letter code)
+countryName_default = US
+countryName_min = 2
+countryName_max = 2
+stateOrProvinceName = State or Province Name (full name)
+stateOrProvinceName_default = North Dakota
+localityName = Locality Name (eg, city)
+localityName_default = West Fargo
+0.organizationName = Organization Name (eg, company)
+0.organizationName_default = Local
+organizationalUnitName = Organizational Unit Name (eg, section)
+organizationalUnitName_default = Lab
+commonName = Common Name (e.g. server FQDN or YOUR name)
+commonName_max = 64
+emailAddress = Email Address
+emailAddress_default = admin@lab.local
+emailAddress_max = 64
+#SET-ex3 = SET extension number 3
+
+#[ req_attributes ]
+#challengePassword = A challenge password
+#challengePassword_min = 4
+#challengePassword_max = 20
+#unstructuredName = An optional company name
+
+[ v3_req ]
+subjectAltName = @alt_names
+
+[ ocsp ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = critical, digitalSignature
+extendedKeyUsage = critical, OCSPSigning
+
+[ crl_ext ]
+#issuerAltName = issuer:copy
+authorityKeyIdentifie = keyid:always
+
+[ v3_ca ]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical,CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ v3_intermediate_ca ]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+
+[ usr_cert ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth
+#subjectAltName = @alt_names
+
+[ server_cert ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+#subjectAltName = @alt_names
+
+#[ alt_names ]
+#DNS.1 = test.lab.local
+#DNS.2 = old-test.lab.local
+#IP.1 = 127.0.0.1
+#IP.2 = fd02::1
