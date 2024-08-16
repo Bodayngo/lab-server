@@ -580,7 +580,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 4. Validate LDAP locally
     ```
-    ldapsearch -x -H ldap://["127.0.0.1"]:389 \
+    ldapsearch -x -H ldap://["10.1.20.10"]:389 \
         -D "uid=service.account,ou=users,dc=lab,dc=local" \
         -w "password" -b "ou=users,dc=lab,dc=local" --  "(uid=john.doe)" "dn"
     ```
