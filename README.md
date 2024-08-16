@@ -298,27 +298,35 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 > ```
 
 1. Configure RADsec clients (access points) to trust root CA created in previous section (/root/ca/intermeiate/ca-chain.lab.local.cert.pem)
+> [!Note]
+> In my case (Meraki APs), the certificate needed to be updloaded to Meraki Dashboard as a trusted RADSec certificate:
+>
+> Organization > Configure > Certificates > Upload CA certificate
 
-2. Create copies of the server certificate, server key, and CA certificate files (these will be used for (EAP-PEAP/TLS and RADSec)
+3. Create copies of the server certificate, server key, and CA certificate files (these will be used for (EAP-PEAP/TLS and RADSec)
     ```
     cp /root/ca/intermediate/certs/server.lab.local.cert.pem /etc/freeradius/3.0/certs/
     cp /root/ca/intermediate/private/server.lab.local.key.pem /etc/freeradius/3.0/certs/
     cp /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem /etc/freeradius/3.0/certs/
     ```
 
-3. Create the trusted root certificate file for RADSec (this will be what issued the AP RADSec certificates).
+4. Create the trusted root certificate file for RADSec (this will be what issued the AP RADSec certificates).
+> [!Note]
+> In my case (Meraki APs), the certificate was downloaded from Meraki Dashboard:
+>
+> Organization > Configure > Certificates > RadSec AP Certificates > Download CA
     ```
     nano /etc/freeradius/3.0/certs/ca-meraki.cert.pem
     ```
 
-4. Ensure correct ownership and permissions
+6. Ensure correct ownership and permissions
     ```
     chown freerad:freerad /etc/freeradius/3.0/certs/*
     chmod 444 /etc/freeradius/3.0/certs/*.cert.pem
     chmod 400 /etc/freeradius/3.0/certs/*.key.pem
     ```
 
-5. Configure the certificates used for EAP-PEAP and EAP-TLS authentication
+7. Configure the certificates used for EAP-PEAP and EAP-TLS authentication
     ```
     nano /etc/freeradius/3.0/mods-available/eap
     ```
@@ -334,7 +342,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     }
     ```
     
-6. Define RADIUS clients (access points)
+8. Define RADIUS clients (access points)
     ```
     nano /etc/freeradius/3.0/clients.conf
     ```
@@ -347,7 +355,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     } 
     ```
 
-7. Configure RADsec by enabling the **tls** site, configuring the RADSec certificates, and defining RADSec clients (access points)
+9. Configure RADsec by enabling the **tls** site, configuring the RADSec certificates, and defining RADSec clients (access points)
     ```
     cd /etc/freeradius/3.0/sites-enabled
     ln -s ../sites-available/tls tls
@@ -372,7 +380,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
             }
     }
     ```
-8. Configure the **inner-tunnel** site to copy attributes from the inner session to the outer session (such as when using EAP-PEAP or EAP-TTLS).
+10. Configure the **inner-tunnel** site to copy attributes from the inner session to the outer session (such as when using EAP-PEAP or EAP-TTLS).
     ```
     nano /etc/freeradius/3.0/sites-available/inner-tunnel
     ```
@@ -383,7 +391,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
             }
     }
     ```
-9. Define users (examples of EAP-PEAP and EAP-TLS provided).
+11. Define users (examples of EAP-PEAP and EAP-TLS provided).
     ```
     nano /etc/freeradius/3.0/users
     ```
@@ -399,7 +407,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
              Session-Timeout := 3600
     ```
 
-10. Restart the **freeradius** daemon
+12. Restart the **freeradius** daemon
     ```
     systemctl restart freeradius
     ```
