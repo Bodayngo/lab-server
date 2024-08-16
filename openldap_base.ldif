@@ -11,6 +11,7 @@
 #         ├── dept2              # dn: ou=dept2,ou=users,dc=lab,dc=local
 #         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
 #         └── service.account    # dn: uid=service.meraki,ou=users,dc=lab,dc=local
+
 #
 # ORGANIZATIONAL UNITS
 #
