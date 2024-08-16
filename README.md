@@ -461,14 +461,13 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     ```
     dpkg-reconfigure slapd
     ```
-
-![image](https://github.com/user-attachments/assets/75ddfeab-4644-4c6e-93e4-779004e903c3)
-![image](https://github.com/user-attachments/assets/9a3abfd2-4934-4b0b-ba27-aeabe158e52d)
-![image](https://github.com/user-attachments/assets/9f09c105-8a29-4eba-8073-6a0400b98da2)
-![image](https://github.com/user-attachments/assets/47c35487-316b-4ffa-862b-289bfdebccc0)
-![image](https://github.com/user-attachments/assets/22d3530b-2d8a-4c8e-852e-7cfc41d6bae5)
-![image](https://github.com/user-attachments/assets/55591760-8c41-4b5e-ac33-6d5f9f8814cb)
-![image](https://github.com/user-attachments/assets/91d34b5f-8ac0-4207-9886-e32e706252b5)
+![Screenshot 2024-08-16 at 8 48 47 AM](https://github.com/user-attachments/assets/942615ba-19b3-4857-bcee-f23b715d9f7b)
+![Screenshot 2024-08-16 at 8 48 55 AM](https://github.com/user-attachments/assets/8bf646bc-21d2-49b7-9d1c-3db9dc5cb105)
+![Screenshot 2024-08-16 at 8 49 02 AM](https://github.com/user-attachments/assets/c3479af3-b9ab-405a-bde6-c1bf50eb9ced)
+![Screenshot 2024-08-16 at 8 49 13 AM](https://github.com/user-attachments/assets/33bfe3e5-8de1-4bc6-bd2b-0caca1efb3af)
+![Screenshot 2024-08-16 at 8 49 21 AM](https://github.com/user-attachments/assets/cb8fde84-14f6-4a91-9df8-432de7bf8f19)
+![Screenshot 2024-08-16 at 8 49 29 AM](https://github.com/user-attachments/assets/15581932-8482-4361-b96b-14bcc5256260)
+![Screenshot 2024-08-16 at 8 49 35 AM](https://github.com/user-attachments/assets/264a9bfa-f718-46ef-ab78-57c1644a9cae)
 
 2. Make a directory for LDIF (LDAP Data Interchange Files) files
     ```
