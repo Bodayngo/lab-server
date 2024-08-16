@@ -578,7 +578,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 > slapcat -b "cn=config"
 > ```
 
-4. Validate LDAP
+4. Validate LDAP locally
     ```
     ldapsearch -x -H ldap://["127.0.0.1"]:389 \
         -D "uid=service.account,ou=users,dc=lab,dc=local" \
