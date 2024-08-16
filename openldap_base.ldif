@@ -1,0 +1,68 @@
+#
+# ORGANIZATIONAL UNITS
+#
+dn: ou=users,dc=lab,dc=local
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=lab,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: ou=dept1,ou=users,dc=lab,dc=local
+objectClass: organizationalUnit
+ou: dept1
+
+dn: ou=dept2,ou=users,dc=lab,dc=local
+objectClass: organizationalUnit
+ou: dept2
+
+dn: ou=disabled-users,dc=lab,dc=local
+objectClass: organizationalUnit
+ou: disabled-users
+
+#
+# USERS
+#
+dn: uid=service.account,ou=users,dc=lab,dc=local
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: service.account
+cn: Service
+sn: Account
+mail: service.account@lab.local
+userPassword: password
+
+dn: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: john.doe
+cn: John
+sn: Doe
+mail: john.doe@lab.local
+userPassword: password
+
+dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: jane.doe
+cn: Jane
+sn: Doe
+mail: jane.doe@lab.local
+userPassword: password
+
+#
+# GROUPS
+#
+dn: cn=employees,ou=groups,dc=lab,dc=local
+objectclass: top
+objectclass: groupOfNames
+cn: employees
+member: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
+member: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
