@@ -1,3 +1,16 @@
+# local                          # dn: dc=local
+# └── lab                        # dn: dc=lab,dc=local
+#     ├── disable-users          # dn: ou=disabled-users,dc=lab,dc=local
+#     ├── groups                 # dn: ou=groups,dc=lab,dc=local
+#     │   └── employees          # dn: cn=employees,ou=groups,dc=lab,dc=local
+#     │       ├── jane.doe       # *** membership defined by "employees" entry
+#     │       └── john.doe       # *** membership defined by "employees" entry
+#     └── users                  # dn: ou=users,dc=lab,dc=local
+#         ├── dept1              # dn: ou=dept1,ou=users,dc=lab,dc=local
+#         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
+#         ├── dept2              # dn: ou=dept2,ou=users,dc=lab,dc=local
+#         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
+#         └── service.account    # dn: uid=service.meraki,ou=users,dc=lab,dc=local
 #
 # ORGANIZATIONAL UNITS
 #
