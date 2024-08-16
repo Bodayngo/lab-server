@@ -521,31 +521,36 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     mkdir -p /etc/ssl/openldap/certs /etc/ssl/openldap/private
     ```
 
-6. Create copies of the server certificate, CA certificate, and private key (unencrypted)
+6. Create copies of the server certificate and CA certificate files
     ```
     cp /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem /etc/ssl/openldap/certs
     cp /root/ca/intermediate/certs/server.lab.local.cert.pem /etc/ssl/openldap/certs
     ```
+
+7. Export an unencrypted version of the server private key file
     ```
     openssl rsa -in /root/ca/intermediate/private/server.lab.local.key.pem \
         -out /etc/ssl/openldap/private/server.lab.local.key.pem
     ```
+
+8. Ensure correct ownership and permissions
     ```
     chmod 400 /etc/ssl/openldap/private/server.lab.local.key.pem
+    chmod 444 /etc/ssl/openldap/certs/*.cert.pem
     chown -R openldap:openldap /etc/ssl/openldap
     ```
 
-7. Create an LDIF file to add SSL/TLS certificate configuration (example contents [here](openldap_ssl.ldif))
+9. Create an LDIF file to add SSL/TLS certificate configuration (example contents [here](openldap_ssl.ldif))
     ```
     nano /etc/ldap/ldif_files/ldap_ssl.ldif
     ```
 
-8. Add the SSL/TLS certificate configuration
+10. Add the SSL/TLS certificate configuration
     ```
     ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/ldif_files/ldap_ssl.ldif
     ```
 
-9. Enable Secure LDAP (LDAPS)
+11. Enable Secure LDAP (LDAPS)
     ```
     nano /etc/default/slapd
     ```
@@ -554,7 +559,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     SLAPD_SERVICES="ldap:/// ldaps:/// ldapi:///"
     ```
 
-9. Restart the **slapd** daemon
+12. Restart the **slapd** daemon
     ```
     systemctl restart slapd
     ```
