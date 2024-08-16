@@ -311,13 +311,13 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     ```
 
 4. Create the trusted root certificate file for RADSec (this will be what issued the AP RADSec certificates).
+    ```
+    nano /etc/freeradius/3.0/certs/ca-meraki.cert.pem
+    ```
 > [!Note]
 > In my case (Meraki APs), the certificate was downloaded from Meraki Dashboard:
 >
 > Organization > Configure > Certificates > RadSec AP Certificates > Download CA
-    ```
-    nano /etc/freeradius/3.0/certs/ca-meraki.cert.pem
-    ```
 
 6. Ensure correct ownership and permissions
     ```
