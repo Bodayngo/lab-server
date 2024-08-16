@@ -539,7 +539,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     ```
     ```
     # UPDATE THE FOLLOWING LINES, CHANGING WHERE NEEDED
-    SLAPD_SERVICES="ldap://10.1.20.10:389 ldaps://10.1.20.10:636 ldapi:///"
+    SLAPD_SERVICES="ldap:/// ldaps:/// ldapi:///"
     ```
 
 9. Restart the **slapd** daemon
@@ -580,7 +580,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 4. Validate LDAP
     ```
-    ldapsearch -x -H ldap://["10.1.20.10"]:389 \
+    ldapsearch -x -H ldap://["127.0.0.1"]:389 \
         -D "uid=service.account,ou=users,dc=lab,dc=local" \
         -w "password" -b "ou=users,dc=lab,dc=local" --  "(uid=john.doe)" "dn"
     ```
