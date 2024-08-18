@@ -319,14 +319,14 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 >
 > Organization > Configure > Certificates > RadSec AP Certificates > Download CA
 
-6. Ensure correct ownership and permissions
+5. Ensure correct ownership and permissions
     ```
     chown freerad:freerad /etc/freeradius/3.0/certs/*
     chmod 444 /etc/freeradius/3.0/certs/*.cert.pem
     chmod 400 /etc/freeradius/3.0/certs/*.key.pem
     ```
 
-7. Configure the certificates used for EAP-PEAP and EAP-TLS authentication
+6. Configure the certificates used for EAP-PEAP and EAP-TLS authentication
     ```
     nano /etc/freeradius/3.0/mods-available/eap
     ```
@@ -342,7 +342,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     }
     ```
     
-8. Define RADIUS clients (access points)
+7. Define RADIUS clients (access points)
     ```
     nano /etc/freeradius/3.0/clients.conf
     ```
@@ -355,7 +355,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     } 
     ```
 
-9. Configure RADsec by enabling the **tls** site, configuring the RADSec certificates, and defining RADSec clients (access points)
+8. Configure RADsec by enabling the **tls** site, configuring the RADSec certificates, and defining RADSec clients (access points)
     ```
     cd /etc/freeradius/3.0/sites-enabled
     ln -s ../sites-available/tls tls
@@ -380,7 +380,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
             }
     }
     ```
-10. Configure the **inner-tunnel** site to copy attributes from the inner session to the outer session (such as when using EAP-PEAP or EAP-TTLS).
+9. Configure the **inner-tunnel** site to copy attributes from the inner session to the outer session (such as when using EAP-PEAP or EAP-TTLS).
     ```
     nano /etc/freeradius/3.0/sites-available/inner-tunnel
     ```
@@ -391,7 +391,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
             }
     }
     ```
-11. Define users (examples of EAP-PEAP and EAP-TLS provided).
+10. Define users (examples of EAP-PEAP and EAP-TLS provided).
     ```
     nano /etc/freeradius/3.0/users
     ```
@@ -407,7 +407,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
              Session-Timeout := 3600
     ```
 
-12. Restart the **freeradius** daemon
+11. Restart the **freeradius** daemon
     ```
     systemctl restart freeradius
     ```
@@ -462,14 +462,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     apt install slapd ldap-utils
     ```
 
-3. Configure the **slapd** daemon to start automatically when the system is booted
-    ```
-    systemctl enable slapd
-    ```
-
-## OpenLDAP Configuration
-
-1. Reconfigure SLAPD. Follow the images below, changing "DNS domain name", "Organization name", and the administrator password as desired
+3. Reconfigure SLAPD. Follow the images below, changing "DNS domain name", "Organization name", and the administrator password as desired
     ```
     dpkg-reconfigure slapd
     ```
@@ -481,12 +474,19 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 ![Screenshot 2024-08-16 at 8 49 29 AM](https://github.com/user-attachments/assets/15581932-8482-4361-b96b-14bcc5256260)
 ![Screenshot 2024-08-16 at 8 49 35 AM](https://github.com/user-attachments/assets/264a9bfa-f718-46ef-ab78-57c1644a9cae)
 
-2. Make a directory for LDIF (LDAP Data Interchange Files) files
+4. Configure the **slapd** daemon to start automatically when the system is booted
+    ```
+    systemctl enable slapd
+    ```
+
+## OpenLDAP Configuration
+
+1. Make a directory for LDIF (LDAP Data Interchange Files) files
     ```
     mkdir /etc/ldap/ldif_files
     ```
     
-3. Create an LDIF file with the base directory (example contents [here](openldap_base.ldif))
+2. Create an LDIF file with the base directory (example contents [here](openldap_base.ldif))
     ```
     nano /etc/ldap/ldif_files/base_config.ldif
     ```
@@ -511,46 +511,46 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 > ```
 
 
-4. Add the base directory to the LDAP directory database
+3. Add the base directory to the LDAP directory database
     ```
     ldapadd -x -D cn=admin,dc=lab,dc=local -W -f /etc/ldap/ldif_files/base_config.ldif
     ```
 
-5. Make directories for the LDAP SSL/TLS certificates and private key
+4. Make directories for the LDAP SSL/TLS certificates and private key
     ```
     mkdir -p /etc/ssl/openldap/certs /etc/ssl/openldap/private
     ```
 
-6. Create copies of the server certificate and CA certificate files
+5. Create copies of the server certificate and CA certificate files
     ```
     cp /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem /etc/ssl/openldap/certs
     cp /root/ca/intermediate/certs/server.lab.local.cert.pem /etc/ssl/openldap/certs
     ```
 
-7. Export an unencrypted version of the server private key file
+6. Export an unencrypted version of the server private key file
     ```
     openssl rsa -in /root/ca/intermediate/private/server.lab.local.key.pem \
         -out /etc/ssl/openldap/private/server.lab.local.key.pem
     ```
 
-8. Ensure correct ownership and permissions
+7. Ensure correct ownership and permissions
     ```
     chmod 400 /etc/ssl/openldap/private/server.lab.local.key.pem
     chmod 444 /etc/ssl/openldap/certs/*.cert.pem
     chown -R openldap:openldap /etc/ssl/openldap
     ```
 
-9. Create an LDIF file to add SSL/TLS certificate configuration (example contents [here](openldap_ssl.ldif))
+8. Create an LDIF file to add SSL/TLS certificate configuration (example contents [here](openldap_ssl.ldif))
     ```
     nano /etc/ldap/ldif_files/ldap_ssl.ldif
     ```
 
-10. Add the SSL/TLS certificate configuration
+9. Add the SSL/TLS certificate configuration
     ```
     ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/ldif_files/ldap_ssl.ldif
     ```
 
-11. Enable Secure LDAP (LDAPS)
+10. Enable Secure LDAP (LDAPS)
     ```
     nano /etc/default/slapd
     ```
@@ -559,7 +559,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     SLAPD_SERVICES="ldap:/// ldaps:/// ldapi:///"
     ```
 
-12. Restart the **slapd** daemon
+11. Restart the **slapd** daemon
     ```
     systemctl restart slapd
     ```
