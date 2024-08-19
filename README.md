@@ -385,7 +385,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     nano /etc/freeradius/3.0/sites-available/inner-tunnel
     ```
     ```
-    # UPDATE THE FOLLOWING LINES, CHANGING WHERE NEEDED
+    # UPDATE THE FOLLOWING LINE
     post-auth {
             if (1) {
             }
