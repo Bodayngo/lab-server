@@ -459,7 +459,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 2. Install necessary packages
     ```
-    apt install slapd ldap-utils
+    apt install slapd ldap-utils -y
     ```
 
 3. Reconfigure SLAPD. Follow the images below, changing "DNS domain name", "Organization name", and the administrator password as desired
