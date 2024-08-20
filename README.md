@@ -597,7 +597,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     slapcat -b "cn=config" | grep -E "olcTLS"
     ```
 
-> [!Note]
+> [!TIP]
 > To view the full LDAP directory database:
 > ```
 > slapcat
