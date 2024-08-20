@@ -142,6 +142,8 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     ```
     chmod 444 /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem
     ```
+> [!IMPORTANT]
+> This CA chain file (/root/ca/intermediate/certs/ca-chain.lab.local.cert.pem) is what will need to be trusted by access points for RADSec/LDAP and client devices for 802.1X/EAP.
 
 ## OpenSSL Server Certificate
 
