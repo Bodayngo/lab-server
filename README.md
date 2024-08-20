@@ -396,15 +396,26 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     nano /etc/freeradius/3.0/users
     ```
     ```
-    # EAP-PEAP
-    username Cleartext-Password := "password"
-             Session-Timeout := 3600,
-             Tunnel-Type := 13,
-             Tunnel-Medium-Type := 6,
-             Tunnel-Private-Group-Id := 255
+    # iPSK
+    8045dd31c4c8            Cleartext-Password := 8045dd31c4c8
+                            Tunnel-Password = ipskpassphrase,
+                            Cisco-AVPair = "psk-mode=ascii",
+                            Cisco-AVPair += "psk=ipskpassphrase"
+    
+    # EAP-PEAP/MSCHAPv2
+    username                Cleartext-Password := "password"
+                            Session-Timeout = 3600,
+                            Tunnel-Type = 13,
+                            Tunnel-Medium-Type = 6,
+                            Tunnel-Private-Group-Id = 255
+    
     # EAP-TLS
-    client@lab.local
-             Session-Timeout := 3600
+    client@lab.local        
+                            Session-Timeout = 3600
+    
+    # Default
+    DEFAULT 
+                            Session-Timeout = 86400
     ```
 
 11. Restart the **freeradius** daemon
