@@ -373,6 +373,8 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
             client access_points {
                     ipaddr = 10.0.0.0
                     netmask = 8
+                    proto = tls
+                    secret = radsec
             }
     }
     ```
