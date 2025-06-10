@@ -286,7 +286,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 7. Name the certificate something user-friendly when prompted; for example: “Lab EAP-TLS Client”
 
-8. Go to **Settings > Network & Internet > Internet** and select your SSID to configure connectivity settings. Examples are provided below:
+8. Go to **Settings > Network & Internet > Internet** and select your SSID to configure connectivity settings. Screenshots of working EAP-PEAP and EAP-TLS settings are provided below:
 
    * [EAP-PEAP](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-PEAP.png)
    * [EAP-TLS](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-TLS.png)
