@@ -25,6 +25,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     * [OpenSSL Intermediate CA](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-intermediate-ca)
     * [OpenSSL Server Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-server-certificate)
     * [OpenSSL Client Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-client-certificate)
+    * [OpenSSL Client Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#client-device-certificate-provisioning-android)
 * [RADIUS/RADSec with FreeRADIUS](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#radiusradsec-with-freeradius)
     * [FreeRADIUS Package Installation](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#freeradius-package-installation)
     * [FreeRADIUS Configuration](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#freeradius-configuration)
@@ -254,17 +255,42 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
         /root/ca/intermediate/certs/client.lab.local.cert.pem
     ```
 
-6. (Optional) Export client CA certificate chain, cilent key, and client certificate as a single PFX/P12/PKCS#12 file
+6. (Optional) Export cilent key and client certificate as a single PFX/P12/PKCS#12 file
     ```
     openssl pkcs12 -export \
         -out /root/ca/intermediate/certs/client.lab.local.cert.pfx \
         -inkey /root/ca/intermediate/private/client.lab.local.key.pem \
-        -in /root/ca/intermediate/certs/client.lab.local.cert.pem \
-        -certfile /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem
+        -in /root/ca/intermediate/certs/client.lab.local.cert.pem
     ```
     ```
     chmod 444 /root/ca/intermediate/certs/client.lab.local.cert.pfx
     ```
+
+## Client Device Certificate Provisioning - Android
+
+1. Transfer the following files to the phone:
+    ```
+    /root/ca/certs/ca-root.lab.local.cert.pem                     # root CA certificate file
+    /root/ca/intermediate/certs/client.lab.local.cert.pfx         # client certificate and private key bundle
+    ```
+    
+2. Go to **Settings → Security & privacy → More security & privacy → Encryption & credentials → Install a certificate → Wi-Fi certificate**.
+   
+3. Select the **ca-root.lab.local.cert.pem** file on the local device
+
+4. Name the certificate something user-friendly when prompted; for example: “Lab Root CA”
+
+5. Go to the same Install a certificate menu above (you should be able to just hit **Wi-Fi certificate** once more after having just done one).
+
+6. Select the **client.lab.local.cert.pfx** file on the local device
+
+7. Name the certificate something user-friendly when prompted; for example: “Lab EAP-TLS Client”
+
+8. Go to **Settings > Network & Internet > Internet** and select your SSID to configure connectivity settings. Examples are provided below:
+
+9a. EAP-PEAP
+
+9b. EAP-TLS
 
 # RADIUS/RADSec with FreeRADIUS
 
