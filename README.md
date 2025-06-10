@@ -291,6 +291,20 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
    * [EAP-PEAP](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-PEAP.png)
    * [EAP-TLS](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-TLS.png)
 
+> [!Note]
+> Modern versions of Android—including Android 15—follow RFC 6125, which specifies that:
+>
+> * The Common Name (CN) must be ignored if the certificate includes a Subject Alternative Name (SAN) extension.
+>
+> So when the server certificate has a SAN field (which it should, per modern best practices), Android:
+>
+> * Uses the SAN to match the domain name (e.g., radius.example.com).
+>
+> * Ignores the CN, even if it's present and contains the same name.
+
+Thus, when you configure the domain name on the Android device to match a SAN DNS entry, it works.
+> ```
+
 # RADIUS/RADSec with FreeRADIUS
 
 ## FreeRADIUS Package Installation
