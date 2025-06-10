@@ -303,7 +303,6 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 > * Ignores the CN, even if it's present and contains the same name.
 > 
 > Thus, when you configure the domain name on the Android device to match a SAN DNS entry, it works.
-> ```
 
 # RADIUS/RADSec with FreeRADIUS
 
