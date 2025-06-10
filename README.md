@@ -25,7 +25,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     * [OpenSSL Intermediate CA](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-intermediate-ca)
     * [OpenSSL Server Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-server-certificate)
     * [OpenSSL Client Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-client-certificate)
-    * [OpenSSL Client Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#client-device-certificate-provisioning---android)
+    * [Client Device Certificate Provisioning - Android](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#client-device-certificate-provisioning---android)
 * [RADIUS/RADSec with FreeRADIUS](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#radiusradsec-with-freeradius)
     * [FreeRADIUS Package Installation](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#freeradius-package-installation)
     * [FreeRADIUS Configuration](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#freeradius-configuration)
