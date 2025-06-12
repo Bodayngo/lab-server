@@ -516,7 +516,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 >         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
 >         ├── dept2              # dn: ou=dept2,ou=users,dc=lab,dc=local
 >         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
->         └── service.account    # dn: uid=service.meraki,ou=users,dc=lab,dc=local
+>         └── service.account    # dn: uid=service.account,ou=users,dc=lab,dc=local
 > ```
 
 
