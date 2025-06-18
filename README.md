@@ -25,6 +25,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     * [OpenSSL Intermediate CA](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-intermediate-ca)
     * [OpenSSL Server Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-server-certificate)
     * [OpenSSL Client Certificate](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#openssl-client-certificate)
+    * [Client Device Certificate Provisioning - Android](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#client-device-certificate-provisioning---android)
 * [RADIUS/RADSec with FreeRADIUS](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#radiusradsec-with-freeradius)
     * [FreeRADIUS Package Installation](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#freeradius-package-installation)
     * [FreeRADIUS Configuration](https://github.com/Bodayngo/lab-server?tab=readme-ov-file#freeradius-configuration)
@@ -254,17 +255,54 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
         /root/ca/intermediate/certs/client.lab.local.cert.pem
     ```
 
-6. (Optional) Export client CA certificate chain, cilent key, and client certificate as a single PFX/P12/PKCS#12 file
+6. (Optional) Export cilent key and client certificate as a single PFX/P12/PKCS#12 file
     ```
     openssl pkcs12 -export \
         -out /root/ca/intermediate/certs/client.lab.local.cert.pfx \
         -inkey /root/ca/intermediate/private/client.lab.local.key.pem \
-        -in /root/ca/intermediate/certs/client.lab.local.cert.pem \
-        -certfile /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem
+        -in /root/ca/intermediate/certs/client.lab.local.cert.pem
     ```
     ```
     chmod 444 /root/ca/intermediate/certs/client.lab.local.cert.pfx
     ```
+
+## Client Device Certificate Provisioning - Android
+
+1. Transfer the following files to the phone:
+    ```
+    /root/ca/certs/ca-root.lab.local.cert.pem                     # root CA certificate file
+    /root/ca/intermediate/certs/client.lab.local.cert.pfx         # client certificate and private key bundle
+    ```
+    
+2. Go to **Settings → Security & privacy → More security & privacy → Encryption & credentials → Install a certificate → Wi-Fi certificate**.
+   
+3. Select the **ca-root.lab.local.cert.pem** file on the local device
+
+4. Name the certificate something user-friendly when prompted; for example: “Lab Root CA”
+
+5. Go to the same Install a certificate menu above (you should be able to just hit **Wi-Fi certificate** once more after having just done one).
+
+6. Select the **client.lab.local.cert.pfx** file on the local device
+
+7. Name the certificate something user-friendly when prompted; for example: “Lab EAP-TLS Client”
+
+8. Go to **Settings > Network & Internet > Internet** and select your SSID to configure connectivity settings. Screenshots of working EAP-PEAP and EAP-TLS settings are provided below (in the examples below, **radius.lab.local** was an SAN I had defined for my server certificate (which had a CN of **server.lab.local**):
+
+   * [EAP-PEAP](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-PEAP.png)
+   * [EAP-TLS](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-TLS.png)
+
+> [!Note]
+> Modern versions of Android—including Android 15—follow RFC 6125, which specifies that:
+>
+> * The Common Name (CN) must be ignored if the certificate includes a Subject Alternative Name (SAN) extension.
+>
+> So when the server certificate has a SAN field (which it should, per modern best practices), Android:
+>
+> * Uses the SAN to match the domain name (e.g., radius.example.com).
+>
+> * Ignores the CN, even if it's present and contains the same name.
+> 
+> Thus, when you configure the domain name on the Android device to match a SAN DNS entry, it works.
 
 # RADIUS/RADSec with FreeRADIUS
 
