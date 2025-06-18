@@ -59,26 +59,26 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 3. Create root CA private key
     ```
     openssl genrsa -aes256 \
-        -out /root/ca/private/ca-root.lab.local.key.pem 4096
+        -out /root/ca/private/ca-root.bodayngo.lab.key.pem 4096
     ```
     ```
-    chmod 400 /root/ca/private/ca-root.lab.local.key.pem
+    chmod 400 /root/ca/private/ca-root.bodayngo.lab.key.pem
     ``` 
 
 4. Create root CA certificate
     ```
     openssl req -config /root/ca/openssl.cnf \
-        -key /root/ca/private/ca-root.lab.local.key.pem \
+        -key /root/ca/private/ca-root.bodayngo.lab.key.pem \
         -new -x509 -days 3650 -sha256 -extensions v3_ca \
-        -out /root/ca/certs/ca-root.lab.local.cert.pem
+        -out /root/ca/certs/ca-root.bodayngo.lab.cert.pem
     ```
     ```
-    chmod 444 /root/ca/certs/ca-root.lab.local.cert.pem
+    chmod 444 /root/ca/certs/ca-root.bodayngo.lab.cert.pem
     ```
 
 5. Validate certificate
     ```
-    openssl x509 -noout -text -in /root/ca/certs/ca-root.lab.local.cert.pem
+    openssl x509 -noout -text -in /root/ca/certs/ca-root.bodayngo.lab.cert.pem
     ```
 
 ## OpenSSL Intermediate CA
@@ -101,50 +101,50 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 3. Create intermediate CA private key
     ```
     openssl genrsa -aes256 \
-        -out /root/ca/intermediate/private/ca-intermediate.lab.local.key.pem 4096
+        -out /root/ca/intermediate/private/ca-intermediate.bodayngo.lab.key.pem 4096
     ```
     ```
-    chmod 400 /root/ca/intermediate/private/ca-intermediate.lab.local.key.pem
+    chmod 400 /root/ca/intermediate/private/ca-intermediate.bodayngo.lab.key.pem
     ``` 
 
 4. Create intermediate CA CSR
     ```
     openssl req -config /root/ca/intermediate/openssl.cnf -new -sha256 \
-        -key /root/ca/intermediate/private/ca-intermediate.lab.local.key.pem \
-        -out /root/ca/intermediate/csr/ca-intermediate.lab.local.csr.pem
+        -key /root/ca/intermediate/private/ca-intermediate.bodayngo.lab.key.pem \
+        -out /root/ca/intermediate/csr/ca-intermediate.bodayngo.lab.csr.pem
     ```
 
 5. Create intermediate CA certificate
     ```
     openssl ca -config /root/ca/openssl.cnf -extensions v3_intermediate_ca \
         -days 1825 -notext -md sha256 \
-        -in /root/ca/intermediate/csr/ca-intermediate.lab.local.csr.pem \
-        -out /root/ca/intermediate/certs/ca-intermediate.lab.local.cert.pem
+        -in /root/ca/intermediate/csr/ca-intermediate.bodayngo.lab.csr.pem \
+        -out /root/ca/intermediate/certs/ca-intermediate.bodayngo.lab.cert.pem
     ```
     ```
-    chmod 444 /root/ca/intermediate/certs/ca-intermediate.lab.local.cert.pem
+    chmod 444 /root/ca/intermediate/certs/ca-intermediate.bodayngo.lab.cert.pem
     ```
 
 6. Validate intermedate certificate
     ```
-    openssl x509 -noout -text -in /root/ca/intermediate/certs/ca-intermediate.lab.local.cert.pem
+    openssl x509 -noout -text -in /root/ca/intermediate/certs/ca-intermediate.bodayngo.lab.cert.pem
     ```
     ```
-    openssl verify -CAfile /root/ca/certs/ca-root.lab.local.cert.pem \
-        /root/ca/intermediate/certs/ca-intermediate.lab.local.cert.pem
+    openssl verify -CAfile /root/ca/certs/ca-root.bodayngo.lab.cert.pem \
+        /root/ca/intermediate/certs/ca-intermediate.bodayngo.lab.cert.pem
     ```
 
 7. Create CA chain
     ```
-    cat /root/ca/intermediate/certs/ca-intermediate.lab.local.cert.pem \
-        /root/ca/certs/ca-root.lab.local.cert.pem > \
-        /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem
+    cat /root/ca/intermediate/certs/ca-intermediate.bodayngo.lab.cert.pem \
+        /root/ca/certs/ca-root.bodayngo.lab.cert.pem > \
+        /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem
     ```
     ```
-    chmod 444 /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem
+    chmod 444 /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem
     ```
 > [!IMPORTANT]
-> This CA chain file (/root/ca/intermediate/certs/ca-chain.lab.local.cert.pem) is what will need to be trusted by access points for RADSec/LDAP and client devices for 802.1X/EAP.
+> This CA chain file (/root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem) is what will need to be trusted by access points for RADSec/LDAP and client devices for 802.1X/EAP.
 
 ## OpenSSL Server Certificate
 
@@ -153,7 +153,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 >
 > If your certificate will require subject alternative names (SANs) such as hostnames or IP addresses, or even altering key/extended key usage options, then changes to the openSSL configuration file will need to be made. To do so, separate openSSL configration files are made for each server or client certificate generated. Not only does this allow you to alter configuration options from a template, but it keeps record of what was used an input for certificate creation, should it need to be referenced again in the future.
 >
-> As an example, Let's say I want to have a server certificate (cn=server.lab.local) that has two SANs. One will be a DNS subdomain (server), the other will be an IP address (10.1.20.10). I would need to make the following changes to the configuration file:
+> As an example, Let's say I want to have a server certificate (cn=server.bodayngo.lab) that has two SANs. One will be a DNS subdomain (server), the other will be an IP address (10.1.20.10). I would need to make the following changes to the configuration file:
 >
 > ```
 > [ server_cert ]
@@ -167,126 +167,126 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 1. Create server openSSL configuration file and edit extensions/parameters, if necessary
     ```
-    cp /root/ca/intermediate/openssl.cnf /root/ca/intermediate/cnf/server.lab.local.openssl.cnf
+    cp /root/ca/intermediate/openssl.cnf /root/ca/intermediate/cnf/server.bodayngo.lab.openssl.cnf
     ```
     ```
-    nano /root/ca/intermediate/cnf/server.lab.local.openssl.cnf
+    nano /root/ca/intermediate/cnf/server.bodayngo.lab.openssl.cnf
     ```
 
 2. Create server private key
     ```
     openssl genrsa -aes256 \
-        -out /root/ca/intermediate/private/server.lab.local.key.pem 4096
+        -out /root/ca/intermediate/private/server.bodayngo.lab.key.pem 4096
     ```
     ```
-    chmod 400 /root/ca/intermediate/private/server.lab.local.key.pem
+    chmod 400 /root/ca/intermediate/private/server.bodayngo.lab.key.pem
     ``` 
 
 3. Create server CSR
     ```
-    openssl req -config /root/ca/intermediate/cnf/server.lab.local.openssl.cnf -new -sha256 \
-        -key /root/ca/intermediate/private/server.lab.local.key.pem \
-        -out /root/ca/intermediate/csr/server.lab.local.csr.pem
+    openssl req -config /root/ca/intermediate/cnf/server.bodayngo.lab.openssl.cnf -new -sha256 \
+        -key /root/ca/intermediate/private/server.bodayngo.lab.key.pem \
+        -out /root/ca/intermediate/csr/server.bodayngo.lab.csr.pem
     ```
 
 4. Create server certificate
     ```
-    openssl ca -config /root/ca/intermediate/cnf/server.lab.local.openssl.cnf \
+    openssl ca -config /root/ca/intermediate/cnf/server.bodayngo.lab.openssl.cnf \
         -extensions server_cert -days 365 -notext -md sha256 \
-        -in /root/ca/intermediate/csr/server.lab.local.csr.pem \
-        -out /root/ca/intermediate/certs/server.lab.local.cert.pem
+        -in /root/ca/intermediate/csr/server.bodayngo.lab.csr.pem \
+        -out /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem
     ```
     ```
-    chmod 444 /root/ca/intermediate/certs/server.lab.local.cert.pem
+    chmod 444 /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem
     ```
 
 5. Validate server certificate
     ```
-    openssl x509 -noout -text -in /root/ca/intermediate/certs/server.lab.local.cert.pem
+    openssl x509 -noout -text -in /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem
     ```
     ```
-    openssl verify -CAfile /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem \
-        /root/ca/intermediate/certs/server.lab.local.cert.pem
+    openssl verify -CAfile /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem \
+        /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem
     ```
 
 ## OpenSSL Client Certificate
 1. Create server openSSL configuration file and edit extensions/parameters, if necessary
     ```
     cp /root/ca/intermediate/openssl.cnf \
-        /root/ca/intermediate/cnf/client.lab.local.openssl.cnf
+        /root/ca/intermediate/cnf/client.bodayngo.lab.openssl.cnf
     ```
     ```
-    nano /root/ca/intermediate/cnf/client.lab.local.openssl.cnf
+    nano /root/ca/intermediate/cnf/client.bodayngo.lab.openssl.cnf
     ```
 
 2. Create client private key
     ```
     openssl genrsa -aes256 \
-        -out /root/ca/intermediate/private/client.lab.local.key.pem 4096
+        -out /root/ca/intermediate/private/client.bodayngo.lab.key.pem 4096
     ```
     ```
-    chmod 400 /root/ca/intermediate/private/client.lab.local.key.pem
+    chmod 400 /root/ca/intermediate/private/client.bodayngo.lab.key.pem
     ``` 
 
 3. Create client CSR
     ```
-    openssl req -config /root/ca/intermediate/cnf/client.lab.local.openssl.cnf \
-        -key /root/ca/intermediate/private/client.lab.local.key.pem \
-        -new -sha256 -out /root/ca/intermediate/csr/client.lab.local.csr.pem
+    openssl req -config /root/ca/intermediate/cnf/client.bodayngo.lab.openssl.cnf \
+        -key /root/ca/intermediate/private/client.bodayngo.lab.key.pem \
+        -new -sha256 -out /root/ca/intermediate/csr/client.bodayngo.lab.csr.pem
     ```  
 
 4. Create client certificate
     ```
-    openssl ca -config /root/ca/intermediate/cnf/client.lab.local.openssl.cnf \
+    openssl ca -config /root/ca/intermediate/cnf/client.bodayngo.lab.openssl.cnf \
         -extensions usr_cert -days 365 -notext -md sha256 \
-        -in /root/ca/intermediate/csr/client.lab.local.csr.pem \
-        -out /root/ca/intermediate/certs/client.lab.local.cert.pem
+        -in /root/ca/intermediate/csr/client.bodayngo.lab.csr.pem \
+        -out /root/ca/intermediate/certs/client.bodayngo.lab.cert.pem
     ```
     ```
-    chmod 444 /root/ca/intermediate/certs/client.lab.local.cert.pem
+    chmod 444 /root/ca/intermediate/certs/client.bodayngo.lab.cert.pem
     ```
 
 5. Validate client certificate
     ```
-    openssl x509 -noout -text -in /root/ca/intermediate/certs/client.lab.local.cert.pem
+    openssl x509 -noout -text -in /root/ca/intermediate/certs/client.bodayngo.lab.cert.pem
     ```
     ```
-    openssl verify -CAfile /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem \
-        /root/ca/intermediate/certs/client.lab.local.cert.pem
+    openssl verify -CAfile /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem \
+        /root/ca/intermediate/certs/client.bodayngo.lab.cert.pem
     ```
 
 6. (Optional) Export cilent key and client certificate as a single PFX/P12/PKCS#12 file
     ```
     openssl pkcs12 -export \
-        -out /root/ca/intermediate/certs/client.lab.local.cert.pfx \
-        -inkey /root/ca/intermediate/private/client.lab.local.key.pem \
-        -in /root/ca/intermediate/certs/client.lab.local.cert.pem
+        -out /root/ca/intermediate/certs/client.bodayngo.lab.cert.pfx \
+        -inkey /root/ca/intermediate/private/client.bodayngo.lab.key.pem \
+        -in /root/ca/intermediate/certs/client.bodayngo.lab.cert.pem
     ```
     ```
-    chmod 444 /root/ca/intermediate/certs/client.lab.local.cert.pfx
+    chmod 444 /root/ca/intermediate/certs/client.bodayngo.lab.cert.pfx
     ```
 
 ## Client Device Certificate Provisioning - Android
 
 1. Transfer the following files to the phone:
     ```
-    /root/ca/certs/ca-root.lab.local.cert.pem                     # root CA certificate file
-    /root/ca/intermediate/certs/client.lab.local.cert.pfx         # client certificate and private key bundle
+    /root/ca/certs/ca-root.bodayngo.lab.cert.pem                     # root CA certificate file
+    /root/ca/intermediate/certs/client.bodayngo.lab.cert.pfx         # client certificate and private key bundle
     ```
     
 2. Go to **Settings → Security & privacy → More security & privacy → Encryption & credentials → Install a certificate → Wi-Fi certificate**.
    
-3. Select the **ca-root.lab.local.cert.pem** file on the local device
+3. Select the **ca-root.bodayngo.lab.cert.pem** file on the local device
 
 4. Name the certificate something user-friendly when prompted; for example: “Lab Root CA”
 
 5. Go to the same Install a certificate menu above (you should be able to just hit **Wi-Fi certificate** once more after having just done one).
 
-6. Select the **client.lab.local.cert.pfx** file on the local device
+6. Select the **client.bodayngo.lab.cert.pfx** file on the local device
 
 7. Name the certificate something user-friendly when prompted; for example: “Lab EAP-TLS Client”
 
-8. Go to **Settings > Network & Internet > Internet** and select your SSID to configure connectivity settings. Screenshots of working EAP-PEAP and EAP-TLS settings are provided below (in the examples below, **radius.lab.local** was an SAN I had defined for my server certificate (which had a CN of **server.lab.local**):
+8. Go to **Settings > Network & Internet > Internet** and select your SSID to configure connectivity settings. Screenshots of working EAP-PEAP and EAP-TLS settings are provided below (in the examples below, **radius.bodayngo.lab** was an SAN I had defined for my server certificate (which had a CN of **server.bodayngo.lab**):
 
    * [EAP-PEAP](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-PEAP.png)
    * [EAP-TLS](https://github.com/Bodayngo/lab-server/blob/development/Android15_EAP-TLS.png)
@@ -339,9 +339,9 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 1. Create copies of the server certificate, server key, and CA certificate files (these will be used for (EAP-PEAP/TLS and RADSec)
     ```
-    cp /root/ca/intermediate/certs/server.lab.local.cert.pem /etc/freeradius/3.0/certs/
-    cp /root/ca/intermediate/private/server.lab.local.key.pem /etc/freeradius/3.0/certs/
-    cp /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem /etc/freeradius/3.0/certs/
+    cp /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem /etc/freeradius/3.0/certs/
+    cp /root/ca/intermediate/private/server.bodayngo.lab.key.pem /etc/freeradius/3.0/certs/
+    cp /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem /etc/freeradius/3.0/certs/
     ```
 
 2. Create the trusted root certificate file for RADSec (this will be what issued the AP RADSec certificates).
@@ -369,9 +369,9 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     eap {
             tls-config tls-common {
                     private_key_password = <key_password>
-                    private_key_file = ${certdir}/server.lab.local.key.pem
-                    certificate_file = ${certdir}/server.lab.local.cert.pem
-                    ca_file = ${cadir}/ca-chain.lab.local.cert.pem
+                    private_key_file = ${certdir}/server.bodayngo.lab.key.pem
+                    certificate_file = ${certdir}/server.bodayngo.lab.cert.pem
+                    ca_file = ${cadir}/ca-chain.bodayngo.lab.cert.pem
             }
     }
     ```
@@ -402,8 +402,8 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
     listen {
         tls {
                 private_key_password = <password>
-                private_key_file = ${certdir}/server.lab.local.key.pem
-                certificate_file = ${certdir}/server.lab.local.cert.pem
+                private_key_file = ${certdir}/server.bodayngo.lab.key.pem
+                certificate_file = ${certdir}/server.bodayngo.lab.cert.pem
                 ca_file = ${cadir}/ca-meraki.cert.pem
         }
     }
@@ -446,7 +446,7 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
                             Tunnel-Private-Group-Id = 255
     
     # EAP-TLS
-    client@lab.local        
+    client@bodayngo.lab        
                             Session-Timeout = 3600
     
     # Default
@@ -543,24 +543,24 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 > 
 > ```
 > local                          # dn: dc=local
-> └── lab                        # dn: dc=lab,dc=local
->     ├── disable-users          # dn: ou=disabled-users,dc=lab,dc=local
->     ├── groups                 # dn: ou=groups,dc=lab,dc=local
->     │   └── employees          # dn: cn=employees,ou=groups,dc=lab,dc=local
+> └── lab                        # dn: dc=bodayngo,dc=lab
+>     ├── disable-users          # dn: ou=disabled-users,dc=bodayngo,dc=lab
+>     ├── groups                 # dn: ou=groups,dc=bodayngo,dc=lab
+>     │   └── employees          # dn: cn=employees,ou=groups,dc=bodayngo,dc=lab
 >     │       ├── jane.doe       # *** membership defined by "employees" entry
 >     │       └── john.doe       # *** membership defined by "employees" entry
->     └── users                  # dn: ou=users,dc=lab,dc=local
->         ├── dept1              # dn: ou=dept1,ou=users,dc=lab,dc=local
->         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
->         ├── dept2              # dn: ou=dept2,ou=users,dc=lab,dc=local
->         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
->         └── service.account    # dn: uid=service.account,ou=users,dc=lab,dc=local
+>     └── users                  # dn: ou=users,dc=bodayngo,dc=lab
+>         ├── dept1              # dn: ou=dept1,ou=users,dc=bodayngo,dc=lab
+>         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=bodayngo,dc=lab
+>         ├── dept2              # dn: ou=dept2,ou=users,dc=bodayngo,dc=lab
+>         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=bodayngo,dc=lab
+>         └── service.account    # dn: uid=service.account,ou=users,dc=bodayngo,dc=lab
 > ```
 
 
 3. Add the base directory to the LDAP directory database
     ```
-    ldapadd -x -D cn=admin,dc=lab,dc=local -W -f /etc/ldap/ldif_files/base_config.ldif
+    ldapadd -x -D cn=admin,dc=bodayngo,dc=lab -W -f /etc/ldap/ldif_files/base_config.ldif
     ```
 
 4. Make directories for the LDAP SSL/TLS certificates and private key
@@ -570,19 +570,19 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 
 5. Create copies of the server certificate and CA certificate files
     ```
-    cp /root/ca/intermediate/certs/ca-chain.lab.local.cert.pem /etc/ssl/openldap/certs
-    cp /root/ca/intermediate/certs/server.lab.local.cert.pem /etc/ssl/openldap/certs
+    cp /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem /etc/ssl/openldap/certs
+    cp /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem /etc/ssl/openldap/certs
     ```
 
 6. Export an unencrypted version of the server private key file
     ```
-    openssl rsa -in /root/ca/intermediate/private/server.lab.local.key.pem \
-        -out /etc/ssl/openldap/private/server.lab.local.key.pem
+    openssl rsa -in /root/ca/intermediate/private/server.bodayngo.lab.key.pem \
+        -out /etc/ssl/openldap/private/server.bodayngo.lab.key.pem
     ```
 
 7. Ensure correct ownership and permissions
     ```
-    chmod 400 /etc/ssl/openldap/private/server.lab.local.key.pem
+    chmod 400 /etc/ssl/openldap/private/server.bodayngo.lab.key.pem
     chmod 444 /etc/ssl/openldap/certs/*.cert.pem
     chown -R openldap:openldap /etc/ssl/openldap
     ```
@@ -645,6 +645,6 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 4. Validate LDAP locally
     ```
     ldapsearch -x -H ldap://["127.0.0.1"]:389 \
-        -D "uid=service.account,ou=users,dc=lab,dc=local" \
-        -w "password" -b "ou=users,dc=lab,dc=local" --  "(uid=john.doe)" "dn"
+        -D "uid=service.account,ou=users,dc=bodayngo,dc=lab" \
+        -w "password" -b "ou=users,dc=bodayngo,dc=lab" --  "(uid=john.doe)" "dn"
     ```
