@@ -1,44 +1,44 @@
-# local                          # dn: dc=local
-# └── lab                        # dn: dc=lab,dc=local
-#     ├── disable-users          # dn: ou=disabled-users,dc=lab,dc=local
-#     ├── groups                 # dn: ou=groups,dc=lab,dc=local
-#     │   └── employees          # dn: cn=employees,ou=groups,dc=lab,dc=local
+# local                          # dn: dc=lab
+# └── lab                        # dn: dc=bodayngo,dc=lab
+#     ├── disable-users          # dn: ou=disabled-users,dc=bodayngo,dc=lab
+#     ├── groups                 # dn: ou=groups,dc=bodayngo,dc=lab
+#     │   └── employees          # dn: cn=employees,ou=groups,dc=bodayngo,dc=lab
 #     │       ├── jane.doe       # *** membership defined by "employees" entry
 #     │       └── john.doe       # *** membership defined by "employees" entry
-#     └── users                  # dn: ou=users,dc=lab,dc=local
-#         ├── dept1              # dn: ou=dept1,ou=users,dc=lab,dc=local
-#         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
-#         ├── dept2              # dn: ou=dept2,ou=users,dc=lab,dc=local
-#         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
-#         └── service.account    # dn: uid=service.meraki,ou=users,dc=lab,dc=local
+#     └── users                  # dn: ou=users,dc=bodayngo,dc=lab
+#         ├── dept1              # dn: ou=dept1,ou=users,dc=bodayngo,dc=lab
+#         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=bodayngo,dc=lab
+#         ├── dept2              # dn: ou=dept2,ou=users,dc=bodayngo,dc=lab
+#         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=bodayngo,dc=lab
+#         └── service.account    # dn: uid=service.meraki,ou=users,dc=bodayngo,dc=lab
 
 #
 # ORGANIZATIONAL UNITS
 #
-dn: ou=users,dc=lab,dc=local
+dn: ou=users,dc=bodayngo,dc=lab
 objectClass: organizationalUnit
 ou: users
 
-dn: ou=groups,dc=lab,dc=local
+dn: ou=groups,dc=bodayngo,dc=lab
 objectClass: organizationalUnit
 ou: groups
 
-dn: ou=dept1,ou=users,dc=lab,dc=local
+dn: ou=dept1,ou=users,dc=bodayngo,dc=lab
 objectClass: organizationalUnit
 ou: dept1
 
-dn: ou=dept2,ou=users,dc=lab,dc=local
+dn: ou=dept2,ou=users,dc=bodayngo,dc=lab
 objectClass: organizationalUnit
 ou: dept2
 
-dn: ou=disabled-users,dc=lab,dc=local
+dn: ou=disabled-users,dc=bodayngo,dc=lab
 objectClass: organizationalUnit
 ou: disabled-users
 
 #
 # USERS
 #
-dn: uid=service.account,ou=users,dc=lab,dc=local
+dn: uid=service.account,ou=users,dc=bodayngo,dc=lab
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -49,7 +49,7 @@ sn: Account
 mail: service.account@lab.local
 userPassword: password
 
-dn: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
+dn: uid=john.doe,ou=dept1,ou=users,dc=bodayngo,dc=lab
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -60,7 +60,7 @@ sn: Doe
 mail: john.doe@lab.local
 userPassword: password
 
-dn: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
+dn: uid=jane.doe,ou=dept2,ou=users,dc=bodayngo,dc=lab
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -74,9 +74,9 @@ userPassword: password
 #
 # GROUPS
 #
-dn: cn=employees,ou=groups,dc=lab,dc=local
+dn: cn=employees,ou=groups,dc=bodayngo,dc=lab
 objectclass: top
 objectclass: groupOfNames
 cn: employees
-member: uid=john.doe,ou=dept1,ou=users,dc=lab,dc=local
-member: uid=jane.doe,ou=dept2,ou=users,dc=lab,dc=local
+member: uid=john.doe,ou=dept1,ou=users,dc=bodayngo,dc=lab
+member: uid=jane.doe,ou=dept2,ou=users,dc=bodayngo,dc=lab
