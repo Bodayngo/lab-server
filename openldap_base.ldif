@@ -1,5 +1,5 @@
-# local                          # dn: dc=lab
-# └── lab                        # dn: dc=bodayngo,dc=lab
+# lab                            # dn: dc=lab
+# └── bodayngo                   # dn: dc=bodayngo,dc=lab
 #     ├── disable-users          # dn: ou=disabled-users,dc=bodayngo,dc=lab
 #     ├── groups                 # dn: ou=groups,dc=bodayngo,dc=lab
 #     │   └── employees          # dn: cn=employees,ou=groups,dc=bodayngo,dc=lab
