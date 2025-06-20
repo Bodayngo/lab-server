@@ -542,8 +542,8 @@ This is a guide on how to set up a lab Ubuntu (v24.04) server with the following
 > The example base configuration LDIF file linked results in the following LDAP stucture:
 > 
 > ```
-> local                          # dn: dc=local
-> └── lab                        # dn: dc=bodayngo,dc=lab
+> lab                            # dn: dc=lab
+> └── bodayngo                   # dn: dc=bodayngo,dc=lab
 >     ├── disable-users          # dn: ou=disabled-users,dc=bodayngo,dc=lab
 >     ├── groups                 # dn: ou=groups,dc=bodayngo,dc=lab
 >     │   └── employees          # dn: cn=employees,ou=groups,dc=bodayngo,dc=lab
