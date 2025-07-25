@@ -46,7 +46,7 @@ objectclass: inetOrgPerson
 uid: service.account
 cn: Service
 sn: Account
-mail: service.account@lab.local
+mail: service.account@bodayngo.lab
 userPassword: password
 
 dn: uid=john.doe,ou=dept1,ou=users,dc=bodayngo,dc=lab
@@ -57,7 +57,7 @@ objectclass: inetOrgPerson
 uid: john.doe
 cn: John
 sn: Doe
-mail: john.doe@lab.local
+mail: john.doe@bodayngo.lab
 userPassword: password
 
 dn: uid=jane.doe,ou=dept2,ou=users,dc=bodayngo,dc=lab
@@ -68,7 +68,7 @@ objectclass: inetOrgPerson
 uid: jane.doe
 cn: Jane
 sn: Doe
-mail: jane.doe@lab.local
+mail: jane.doe@bodayngo.lab
 userPassword: password
 
 #
