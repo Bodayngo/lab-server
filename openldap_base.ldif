@@ -10,7 +10,7 @@
 #         │   └── john.doe       # dn: uid=john.doe,ou=dept1,ou=users,dc=bodayngo,dc=lab
 #         ├── dept2              # dn: ou=dept2,ou=users,dc=bodayngo,dc=lab
 #         │   └── jane.doe       # dn: uid=jane.doe,ou=dept2,ou=users,dc=bodayngo,dc=lab
-#         └── service.account    # dn: uid=service.meraki,ou=users,dc=bodayngo,dc=lab
+#         └── service.account    # dn: uid=service.account,ou=users,dc=bodayngo,dc=lab
 
 #
 # ORGANIZATIONAL UNITS
