@@ -1,0 +1,13 @@
+# run OCSP responder
+openssl ocsp -index /root/ca/intermediate/index.txt \
+	-CA /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem \
+	-rsigner /root/ca/intermediate/certs/ocsp.example.com.cert.pem \
+	-rkey /root/ca/intermediate/private/ocsp.example.com.key.pem \
+	-port 2560 -text -out /root/ca/intermediate/ocsp_log.txt
+
+
+# query OCSP responder
+openssl ocsp -CAfile /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem \
+      -url http://127.0.0.1:2560 -resp_text \
+      -issuer /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem \
+      -cert /root/ca/intermediate/certs/server.bodayngo.lab.cert.pem
