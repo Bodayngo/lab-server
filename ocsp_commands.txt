@@ -1,8 +1,23 @@
+# create OCSP private key
+openssl genrsa -aes256 \
+	-out /root/ca/intermediate/private/ocsp.bodayngo.lab.key.pem 4096
+
+# create OCSP CSR
+openssl req -config /root/ca/intermediate/openssl.cnf -new -sha256 \
+	-key /root/ca/intermediate/private/ocsp.bodayngo.lab.key.pem \
+	-out /root/ca/intermediate/csr/ocsp.bodayngo.lab.csr.pem
+
+# create OCSP certificate
+openssl ca -config /root/ca/intermediate/openssl.cnf \
+	-extensions ocsp -days 375 -notext -md sha256 \
+	-in /root/ca/intermediate/csr/ocsp.bodayngo.lab.csr.pem \
+	-out /root/ca/intermediate/certs/ocsp.bodayngo.lab.cert.pem
+
 # run OCSP responder
 openssl ocsp -index /root/ca/intermediate/index.txt \
 	-CA /root/ca/intermediate/certs/ca-chain.bodayngo.lab.cert.pem \
-	-rsigner /root/ca/intermediate/certs/ocsp.example.com.cert.pem \
-	-rkey /root/ca/intermediate/private/ocsp.example.com.key.pem \
+	-rsigner /root/ca/intermediate/certs/ocsp.bodayngo.lab.cert.pem \
+	-rkey /root/ca/intermediate/private/ocsp.bodayngo.lab.key.pem \
 	-port 2560 -text -out /root/ca/intermediate/ocsp_log.txt
 
 # query OCSP responder
